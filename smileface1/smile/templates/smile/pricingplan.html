@@ -1,0 +1,100 @@
+{% include "header.html" %}
+
+{% load static%}
+
+
+
+<div class="card"></div>
+<div class="card-group">
+    <div class="card">
+        <div class="card-body">
+            <h2
+                style="padding: 10px; background-color: rgb(75, 223, 173); text-align: center; font-size: 12px; color: white;">
+                Single smile</h2>
+            <p
+                style="padding: 30px 10px; background-color: rgb(75, 223, 173); text-align: center; font-size: 12px; color: white; margin-top: -20px;">
+                $<span style="font-size: 70px;font-weight: bold; color: white;">5</span></p>
+            <h2
+                style="padding: 10px; background-color: rgb(75, 223, 173); text-align: center; font-size: 12px; color: white;  margin-top: -20px;">
+                One Pixel</h2>
+            <h4 class="card-title" style="font-size: 13px;padding: 30px 90px 20px 90px;">One Image</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">One Reason to Smile</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">NFT Email Notification</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">Your Spot Details</h4>
+
+            <form action="chargestripe5doller" method="post">
+                {% csrf_token %}
+                <h2> Buy For 5.0 </h2>
+
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
+                    data-description="Payment Gateway" data-amount="500" data-locale="auto">
+                    </script>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2
+                style="padding: 10px; background-color: rgb(105, 171, 214); text-align: center; font-size: 12px; color: white;">
+                2 smile</h2>
+            <p
+                style="padding: 30px 10px;  background-color: rgb(105, 171, 214); text-align: center; font-size: 12px; color: white; margin-top: -20px;">
+                $<span style="font-size: 70px;font-weight: bold; color: white;">10</span></p>
+            <h2
+                style="padding: 10px;  background-color: rgb(105, 171, 214); text-align: center; font-size: 12px; color: white;  margin-top: -20px;">
+                2 Pixel</h2>
+            <h4 class="card-title" style="font-size: 13px;padding: 30px 90px 20px 90px;">One Image</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">One Reason to Smile</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">NFT Email Notification</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">Your Spot Details</h4>
+
+            <form action="chargestripe10doller" method="post">
+                {% csrf_token %}
+                <h2> Buy For 10.0 </h2>
+
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
+                    data-description="Payment Gateway" data-amount="1000" data-locale="auto">
+                    </script>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2
+                style="padding: 10px; background-color: rgb(233, 49, 79); text-align: center; font-size: 12px; color: white;">
+                3 smile</h2>
+            <p
+                style="padding: 30px 10px; background-color: rgb(233, 49, 79); text-align: center; font-size: 12px; color: white; margin-top: -20px;">
+                $<span style="font-size: 70px;font-weight: bold; color: white;">15</span></p>
+            <h2
+                style="padding: 10px; background-color: rgb(233, 49, 79); text-align: center; font-size: 12px; color: white;  margin-top: -20px;">
+                3 Pixel</h2>
+            <h4 class="card-title" style="font-size: 13px;padding: 30px 90px 20px 90px;">One Image</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">One Reason to Smile</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">NFT Email Notification</h4>
+            <h4 class="card-title" style="font-size: 13px;padding: 20px 90px;">Your Spot Details</h4>
+
+
+
+            <form action="chargestripe15doller" method="post">
+                {% csrf_token %}
+                <h2> Buy For 15.0 </h2>
+
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
+                    data-description="Payment Gateway" data-amount="1500" data-locale="auto">
+                    </script>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

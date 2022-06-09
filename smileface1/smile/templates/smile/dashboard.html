@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block body %}
+
+
+{% load static%}
+<h1> Wellcome {{request.user}} </h1>
+
+
+
+<section class="contact-clean">
+    <form action="submitSmile" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <h2 class="text-center">Upload</h2>
+                {{form}}
+            <div class="form-group">
+            
+                <button type="submit" class="btn btn-primary btn-lg">Login</button>
+
+            </div>
+    </form>
+</section>
+
+
+{% endblock body %}

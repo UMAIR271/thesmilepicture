@@ -1,0 +1,77 @@
+{% extends 'base.html'%}
+{% block body %}
+
+{% load static%}
+
+<div class="container-fluid hero">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-xl-12">
+            <!-- <h1>The revolution is here.</h1>
+            <p>Mauris egestas tellus non ex condimentum, ac ullamcorper sapien dictum. Nam consequat neque quis sapien viverra convallis. In non tempus lorem. </p><button class="btn btn-light btn-lg action-button" type="button">Learn More</button>
+        </div> -->
+            <!-- <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block phone-holder"> -->
+            <div class="phone-mockup pb-5">
+                <img class="device" src="{%static 'img/slide1.png'%}">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{%static 'img/SmilingMosac.png'%}" alt="">
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                style="position: absolute; overflow-y: hidden;" aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" style="margin-left: 13rem;" role="document">
+                    <div class="modal-content" style="background: transparent;">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <img src="{%static 'img/marilyn.jpg'%}" alt="">
+                            <button type="button" class="close"
+                                style="background: white !important; box-shadow: 0 3px 10px rgb(0 0 0 / 20%); margin: 0; position: relative; right: 45px;"
+                                data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!-- <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <p class="text-uppercase text-center" style="color: #c32f49; font-weight: 600;">Hi, John</p>
+            <div>
+                <p class="text-uppercase text-center" style="color: #c32f49; font-weight: 600;">enter the pixel
+                    code to<br> see a reason to smile</p>
+            </div>
+            <div class="d-flex text-center d-flex justify-content-center py-5">
+                <div class="btn-group-toggle mr-3" data-toggle="buttons">
+                    <label class="btn btn-dark btn-lg active px-5">
+                        <input type="checkbox" checked autocomplete="off"> 100
+                    </label>
+                </div>
+                <div class="btn-group-toggle mx-3" data-toggle="buttons">
+                    <label class="btn btn-dark btn-lg active px-5">
+                        <input type="checkbox" checked autocomplete="off"> 100
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-warning btn-lg btn-block text-uppercase" data-toggle="modal"
+                    data-target="#exampleModalCenter">view</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}

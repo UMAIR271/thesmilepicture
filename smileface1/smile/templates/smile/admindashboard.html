@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% block body %}
+
+
+{% load static%}
+<h1> Wellcome Super {{request.user}} </h1>
+<div class="container">
+    {% csrf_token %}
+<form action="" method="post">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>Message</th>
+            <th>Image</th>
+            <th>Approval</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for stud in silmedata %}  
+          <tr>
+            <td>{{stud.smileUserName}}</td>
+            <td>{{stud.smileReason}}</td>
+            <td>
+                <img src="/{{stud.smileImage}}" width="50px" height="50px">
+            </td>
+            
+            {% if stud.smile_Aprroval %}
+              <td>
+                <h3>Approved</h3>
+              </td>
+            {% else %}
+              <td>
+                <a href="{% url 'approve' stud.smileUserName  %}"><img src="{% static 'smile/images (1).jpeg' %}" width="50px" height="50px" ></a>
+                <a href="{% url 'disapprove' stud.smileUserName %}"><img src="{% static 'smile/images.jpeg' %}" width="50px" height="50px" ></a>
+              </td>
+            {% endif %}
+          </tr>
+          {% endfor %} 
+        </tbody>
+    </table>
+</form>
+    </div>
+
+
+
+<a type="button" href="/smile/generatemosac" class="btn btn-primary">Generate New With Images Repeated</a>
+<a type="button" href="/smile/generatemosac2" class="btn btn-primary">Generate New with Images not Repeated Mosac</a>
+<button type="button" class="btn btn-secondary" style="display: none;">Secondary</button>
+
+
+{% endblock body %}

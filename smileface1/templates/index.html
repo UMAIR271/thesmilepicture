@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+{% block body %}
+
+
+{% load static%}
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" onclick="this.parentElement.style.display='none';" role="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+    {% endif %}
+    
+</div>
+
+{% for item in smileImages %}
+
+<img src="/{{item.smileImage}}" width="50px" height="50px">
+{%endfor%}
+<div class="container-fluid hero">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-xl-12">
+            <!-- <h1>The revolution is here.</h1>
+            <p>Mauris egestas tellus non ex condimentum, ac ullamcorper sapien dictum. Nam consequat neque quis sapien viverra convallis. In non tempus lorem. </p><button class="btn btn-light btn-lg action-button" type="button">Learn More</button>
+        </div> -->
+            <!-- <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block phone-holder"> -->
+            <div class="phone-mockup"><img class="device" src="assets/img/SF/Elements of Page/Slider-Image.png">
+                <div class="screen"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid center-container">
+    <div class="h-container">
+        <h2 class="text-center text-uppercase" style="color: #832225;">a million pixel smile</h2>
+        <div class="h-image">
+            <a href="click"><img src="{%static 'img/mosaic.png' %}" alt="">
+        </div>
+        <div class="container-para">
+            <p style="color: #000000;">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+                numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+                optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+                obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+                nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+                tenetur error, harum nesciunt ipsum debitis quas aliquid. Lorem ipsum dolor sit, amet
+                consectetur adipisicing elit. Sequi, modi explicabo, eligendi facere, reiciendis minus eos non
+                ipsam esse id similique! Obcaecati odit qui perspiciatis voluptas, aspernatur illo nihil optio.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
