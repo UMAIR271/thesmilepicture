@@ -66,10 +66,10 @@ def handlesignup(request):
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
-
+        checkCode = request.POST['referal']
         # Checks
         if password == password2:
-            if len(password) >7:
+            if len(password) >2:
                 if User.objects.filter(username=user).exists():
                     messages.success(request,"this user is already exsit!")
                     return redirect('signup')
@@ -142,3 +142,7 @@ def testfunction(request):
 
     pramas = {'Var': letter_count}
     return render(request, 'testfunction.html', pramas)
+
+
+def userDashbord(request):
+    return render(request, 'test.html')

@@ -6,6 +6,7 @@ from tkinter import CASCADE
 from django.db import models
 from django.urls import reverse
 import uuid
+from .code import generate_code
 
 # Create your models here.
 
@@ -16,21 +17,18 @@ class Smile (models.Model):
     smile_Aprroval = models.BooleanField(default=False)
     smileUserName = models.CharField(max_length=100, default="")
     smileImage = models.ImageField(upload_to='smile/images', default="")
-
+    referal_code = models.CharField(max_length=12, blank=True)
+    
     def __str__(self):
         return self.smileUserName
 
+    def save(self, *args, **kwargs):
+        if self.referal_code == "":
+            referal_code = generate_code()
+            self.referal_code = referal_code
+        return super().save(*args, **kwargs)
 
-class Category(models.Model):
-    Category_id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    category_name   = models.CharField(max_length=50, unique=True)
-    def __str__(self):
-        return self.category_name
 
-class product(models.Model):
-    id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    product_name   = models.CharField(max_length=50, unique=True)
-    Categories_id = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 

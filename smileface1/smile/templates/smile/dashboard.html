@@ -11,7 +11,12 @@
     <form action="submitSmile" method="post" enctype="multipart/form-data">
         {% csrf_token %}
             <h2 class="text-center">Upload</h2>
-                {{form}}
+            <label for="smileReason">smileReason: </label>
+                {{form.smileReason}}
+            <label for="smileUserName">smileUserName</label>
+                {{form.smileUserName}}
+            <label for=""></label>
+
             <div class="form-group">
             
                 <button type="submit" class="btn btn-primary btn-lg">Login</button>

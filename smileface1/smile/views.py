@@ -27,10 +27,14 @@ def dashboard(request):
 
     if request.user.is_superuser:
          smileImages = Smile.objects.all()
+         #images = Smile.objects.aggregate(Count('smileImage'))
+         images = Smile.objects.values_list('smileImage', flat=True).count()
          context = {
-                "silmedata": smileImages
+                "silmedata": smileImages,
+                 "users_count": smileImages.count,
+                 'images' :  images
             }
-         return render(request, 'smile/admindashboard.html', context)
+         return render(request, 'smile/newadmin.html', context)
     else:
 
         form = smileSubmitForm()
@@ -192,6 +196,7 @@ def disapprove(request, username):
 
 
 def generatemosac(request):
+
     print("generating mosac")
     os.system("python smileface1/test.py --target-image smileface1/test/test-data/a.jpg --input-folder  media/smile/images/ --grid-size 100 100 ")
     return HttpResponse("Generating Mosac")
@@ -222,4 +227,50 @@ def newadmindashbord(request):
 
         context = {'form': form}
         return render(request, 'smile/dashboard.html', context)
+
+
+def userInfor(request):
+    if request.user.is_superuser:
+         userInfor = Smile.objects.all()
+         #images = Smile.objects.aggregate(Count('smileImage'))
+         images = Smile.objects.values_list('smileImage', flat=True).count()
+         context = {
+                "userInfor": userInfor,
+                 "users_count": userInfor.count,
+                 'images' :  images
+            }
+         return render(request, 'smile/newadmin.html', context)
+    else:
+
+        form = smileSubmitForm()
+        form = smileSubmitForm(
+            initial={'smileUserName': request.user.username})
+
+        context = {'form': form}
+        return render(request, 'smile/dashboard.html', context)
+
+
+def userIfind(request):
+    if request.method == 'POST':
+        username = request.POST["username"]
+        userInfor = Smile.objects.all()
+         #images = Smile.objects.aggregate(Count('smileImage'))
+        images = Smile.objects.values_list('smileImage', flat=True).count()
+        data = Smile.objects.filter(smileUserName=username).values()
+        print(data)
+        context = {
+                "data": data,
+                 "userInfor": userInfor,
+                 "users_count": userInfor.count,
+                 'images' :  images
+            }
+        return render(request, 'smile/newadmin.html', context)
+    else:
+        return render(request, 'smile/newadmin.html')
+
+
+        
+
+
+    
 

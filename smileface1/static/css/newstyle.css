@@ -257,7 +257,9 @@ body {
 .cardBox .card:hover .iconBx {
   color: var(--white);
 }
-
+.iconBx{
+  margin-left: 30px;
+}
 /* ================== Order Details List ============== */
 .details {
   position: relative;
@@ -363,7 +365,7 @@ body {
 
 .recentCustomers {
   position: relative;
-  display: grid;
+
   min-height: 500px;
   padding: 20px;
   background: var(--white);

@@ -35,5 +35,9 @@ urlpatterns = [
     path('approve/<str:username>/', views.approve, name='approve'),
     path('disapprove/<str:username>/', views.disapprove, name='disapprove'),
     path('generatemosac', views.generatemosac, name='generatemosac'),
-    path('generatemosac2', views.generatemosac2, name='generatemosac2')
+    path('generatemosac2', views.generatemosac2, name='generatemosac2'),
+    path('userInfor', views.userInfor, name='userInfor'),
+    path('userIfind', views.userIfind, name='userIfind'),
+
+
 ]
