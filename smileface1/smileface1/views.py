@@ -4,6 +4,7 @@
 import argparse
 from email.policy import default
 import os
+from webbrowser import get
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 #from pyexpat.errors import messages
@@ -14,15 +15,46 @@ from django.contrib.auth import authenticate, login as dj_login, logout
 from django.contrib.auth.models import User
 from smile.models import Smile as smilingimagestable
 from subprocess import call
+from smile.code import generate_code
+from smile.models import profile
 import test as mosaci
 
 
 def index(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            user=request.user.username
+            data=profile.objects.get(FName=user)
+            context = {
+                'data':data
+            }
+        return render(request, 'test.html', context)
 
-    smileImages = smilingimagestable.objects.all()
+    if request.method == "POST":
+        FirstName = request.POST["FirstName"]
+        LastName = request.POST["LastName"]
+        email = request.POST['email']
+        phone = request.POST['phone']
+        ReferalCode = request.POST['ReferalCode']
+        profileimage = request.POST['profileimage']
+        if profile.objects.filter(FName=FirstName).exists():
+            messages.success(request,"you already create the profile!")
+            return render(request, 'test.html')
+        else:
+            profile_obj = profile.objects.create(FName=FirstName,LName=LastName,email=email,Phone=phone,profile_image=profileimage,
+            referal_code = ReferalCode)
+            profile_obj.save()
+            print(FirstName,LastName,email,phone,ReferalCode)
+            code = "none"
+            return render(request, 'test.html', {'code': code})
 
-    # return HttpResponse("Hello")
-    return render(request, 'index.html', {'smileImages': smileImages})
+
+
+def userProfile(request):
+    if request.method == 'POST':
+        pass
+
+
 
 
 def aboutus(request):
@@ -62,7 +94,6 @@ def handlesignup(request):
         # Get Parameters
         username = request.POST["username"]
         user=username.lower()
-        print(user)
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
@@ -75,8 +106,26 @@ def handlesignup(request):
                     return redirect('signup')
         # create user
                 else:
-                    myuser = User.objects.create_user(username, email, password)
-                    myuser.save()
+                    if checkCode:
+                        referal_obj=profile.objects.filter(referal_code=checkCode,).get()
+                        point = referal_obj.points
+                        point = point +1
+                        print(point)
+                        user = profile.objects.filter(FName=referal_obj).update(points=point)            
+                    else:
+                        myuser = User.objects.create_user(username, email, password)
+                        myuser.save()
+                        user= myuser.username
+                        userid= ''
+                        data=User.objects.filter(username=user).values()
+                        for i in data:
+                            id = i['id']
+                            userid=id
+
+                        userinstant = User.objects.get(id=userid)
+                        code=generate_code()
+                        profile_obj = profile.objects.create(FName=username,user_id= userinstant, email=email, referal_code=code)
+                        profile_obj.save()
 
                 return render(request, 'login.html')
             else:
@@ -101,8 +150,9 @@ def handlelogin(request):
         # Get Post Parameters
         loginusername = request.POST["loginusername"]
         loginpassword = request.POST['loginpassword']
-
+        print(loginusername,loginpassword)
         user = authenticate(username=loginusername, password=loginpassword)
+        print(user)
         picuploaduser = smilingimagestable.objects.values_list('smileUserName',flat=True)
         v1 = list(picuploaduser)
         for i in v1:
@@ -115,7 +165,8 @@ def handlelogin(request):
 
             if user is not None:
                 dj_login(request, user)
-                return redirect('smile/dashboard')
+                print("Checking User Name")
+                return redirect('index')
 
             else:
                 messages.success(request,("invalid credentials Please try again "))

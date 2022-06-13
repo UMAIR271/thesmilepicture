@@ -28,6 +28,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin', admin.site.urls),
     path('', views.index, name='index'),
+    path('userProfile', views.userProfile, name='userProfile'),
+
     path('aboutus', views.aboutus, name='aboutus'),
     path('contactus', views.contactus, name='contactus'),
     path('mission', views.mission, name='mission'),
@@ -38,6 +40,7 @@ urlpatterns = [
     path('click', views.click, name='click'),
     path('handlesignup', views.handlesignup, name='handlesignup'),
     path('handlelogin', views.handlelogin, name='handlelogin'),
+    path('handlelogout', views.handlelogout, name='handlelogout'),
     path('handlelogout', views.handlelogout, name='handlelogout'),
     path('smile/', include(smile.urls))
 

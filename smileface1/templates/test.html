@@ -1,36 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href=" {%static 'css/bootstrap.min.css' %}">
-    <title>Document</title>
+    <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="{%static 'css/userdashboard.css' %} ">  
+    <script src="https://kit.fontawesome.com/669b5cc37c.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="#">Hidden brand</a>
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+    <!-- =============== Navigation ================ -->
+    <div class="container-fuild">
+        <div class="navigation">
+            <ul class="ps-2">
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="logo-apple"></ion-icon>
+                        </span>
+                        <span class="title">Brand Name</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'newadmindashbord' %}">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'userInfor' %}">
+                            <span class="icon">
+                                <ion-icon name="people-outline"></ion-icon>
+                            </span>
+                        <span class="title">Profile</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Upload smile</span>
+                    </a>
+                </li>
+                
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title">Status</span>
+                    </a>
+                </li>
+                <li>
+                  <a href="#">
+                      <span class="icon">
+                          <ion-icon name="help-outline"></ion-icon>
+                      </span>
+                      <span class="title">Download</span>
+                  </a>
+              </li>
+                <li>
+                    <a href="/handlelogout">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-      </nav>
-    
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="assets/imgs/customer01.jpg" alt="">
+                </div>
+            </div>
+
+
+
+            <!-- ======================= profile ================== -->
+            <div class="container">
+              <div class="row gutters pt-5">
+              <!-- =============== message ================ -->
+                <div class="container">
+                  {% if messages %}
+                      {% for message in messages %}
+                      <div class="alert alert-warning alert-dismissible fade show" onclick="this.parentElement.style.display='none';" role="alert">
+                          {{message}}
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      {% endfor %}
+                  {% endif %}
+                </div>
+              <div class="profile col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="account-settings">
+                    <div class="user-profile">
+                      <div class="user-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+                      </div>
+                      <h5 class="user-name">Yuki Hayashi</h5>
+                      <h6 class="user-email">yuki@Maxwell.com</h6>
+                    </div>
+                    <div class="about">
+                      <h5>About</h5>
+                      <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-5">
+                      <h3 class="mb-2 text-primary text-center">Personal Details</h3>
+                    </div>
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <div class="row pb-5">
+                        <div class="col-md-6">
+
+                          <div class="form-group">
+                            <label for="first"> <h4>First Name</h4></label>
+                            <input type="text" class="form-control" readonly value="{{data.FName}}" placeholder="First Name" name="FirstName" id="first">
+                          </div>
+                        </div>
+                        <!--  col-md-6   -->
+                  
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="last"><h4>Last Name</h4></label>
+                            <input type="text" class="form-control" placeholder="" id="last" name="LastName">
+                          </div>
+                        </div>
+                        <!--  col-md-6   -->
+                      </div>
+                  
+                  
+                      <div class="row pb-5">
+                        <div class="col-md-6">
+                  
+                          <div class="form-group">
+                            <label for="email"><h4>Email address</h4></label>
+                            <input type="email" class="form-control" name="email" id="email" readonly value="{{data.email}}" placeholder="email">
+                          </div>
+                        </div>
+                        
+                        <!--  col-md-6   -->
+                  
+                        <div class="col-md-6">
+                  
+                          <div class="form-group">
+                            <label for="phone"><h4>Phone Number</h4></label>
+                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone">
+                          </div>
+                        </div>
+                        <!--  col-md-6   -->
+                      </div>
+                      <!--  row   -->
+                  
+                  
+                      <div class="row pb-5">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="company"><h4>Referal Code</h4></label>
+                            <input type="text" class="form-control" name="ReferalCode" placeholder="Referal Code" id="code" value="{{data.referal_code}}" readonly name="Referal Code                 ">
+                          </div>
+                        </div>
+                        
+                        <!--  col-md-6   -->
+                  
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            
+                            <div>
+                              <label for="url"><h4>Upload Profile image </h4></label>
+                              <input class="form-control form-control-lg" name="profileimage" id="formFileLg" type="file">
+                            </div>
+                          </div>
+                  
+                        </div>
+                        <!--  col-md-6   -->
+                      </div>
+                      <!--  row   -->
+                  
+                      <button type="submit" class="btn btn-primary float-center">Submit</button>
+                    </form>
+                  </div>
+                    
+                </div>
+              </div>
+              </div>
+              </div>
+              </div>
+            
+            <!-- ================ Order Details List ================= -->
+            
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="assets/js/main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+<script>
+    // add hovered class to selected list item
+let list = document.querySelectorAll(".navigation li");
+
+function activeLink() {
+  list.forEach((item) => {
+    item.classList.remove("hovered");
+  });
+  this.classList.add("hovered");
+}
+
+list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+// Menu Toggle
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function () {
+  navigation.classList.toggle("active");
+  main.classList.toggle("active");
+}
+$(document).ready(function(){
+  $("#tableSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+</script>
 </html>

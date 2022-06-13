@@ -1,4 +1,10 @@
 from distutils.command.upload import upload
+from enum import unique
+from django.contrib.auth.models import User
+from numpy import True_
+from phonenumber_field.modelfields import PhoneNumberField
+
+import email
 from email.policy import default
 from pyexpat import model
 from statistics import mode
@@ -30,5 +36,18 @@ class Smile (models.Model):
 
 
 
+class profile(models.Model):
+    profile_id = models.AutoField(auto_created=True, primary_key=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    FName = models.CharField(max_length=15, blank=True,unique=True)
+    LName = models.CharField(max_length=15, blank=True)
+    Phone = PhoneNumberField(blank = True)
+    email = models.EmailField(max_length=70,blank=True,unique=True)
+    profile_image = models.ImageField(upload_to='smile/images', default="")
+    referal_code = models.CharField(max_length=12, blank=True)
+    points = models.PositiveIntegerField(blank=True, default=0)
+
+    def __str__(self):
+        return self.FName
 
 
