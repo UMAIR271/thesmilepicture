@@ -35,14 +35,14 @@ def dashboard(request):
                  'images' :  images
             }
          return render(request, 'smile/newadmin.html', context)
-    else:
 
+def UploadMozacimage(request):
         form = smileSubmitForm()
         form = smileSubmitForm(
             initial={'smileUserName': request.user.username})
 
         context = {'form': form}
-        return render(request, 'smile/dashboard.html', context)
+        return render(request, 'test.html', context)
 
 
 def submitSmile(request):
@@ -51,14 +51,14 @@ def submitSmile(request):
         form = smileSubmitForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-    return redirect('pricingplan')
+    return redirect('smile:pricingplan')
 
 
 def pricingplan(request):
     my_context = {
         "key": settings.STRIPE_PUBLISHABLE_KEY
     }
-    return render(request, 'smile/pricingplan.html', my_context)
+    return render(request, 'test.html', my_context)
 
 
 def chargestripe5doller(request):

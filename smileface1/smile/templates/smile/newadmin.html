@@ -27,7 +27,7 @@
                 </li>
 
                 <li>
-                    <a href="{% url 'newadmindashbord' %}">
+                    <a href="{% url 'smile:newadmindashbord' %}">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -36,7 +36,7 @@
                 </li>
 
                 <li>
-                    <a href="{% url 'userInfor' %}">
+                    <a href="{% url 'smile:userInfor' %}">
                             <span class="icon">
                                 <ion-icon name="people-outline"></ion-icon>
                             </span>
@@ -168,8 +168,8 @@
                                   </td>
                                 {% else %}
                                   <td>
-                                    <a href="{% url 'approve' stud.smileUserName  %}"><img src="{% static 'smile/images (1).jpeg' %}" width="30px" height="30px" ></a>
-                                    <a href="{% url 'disapprove' stud.smileUserName %}"><img src="{% static 'smile/images.jpeg' %}" width="30px" height="30px" ></a>
+                                    <a href="{% url 'smile:approve' stud.smileUserName  %}"><img src="{% static 'smile/images (1).jpeg' %}" width="30px" height="30px" ></a>
+                                    <a href="{% url 'smile:disapprove' stud.smileUserName %}"><img src="{% static 'smile/images.jpeg' %}" width="30px" height="30px" ></a>
                                   </td>
                                 {% endif %}
                               </tr>
@@ -286,7 +286,7 @@
                                 <h2 class="pt-5 text-center" style="color: #2a2185;;">search User</h2>
                             </div>
                             <div class="col-4 pt-5">
-                                <form action="{% url 'userIfind' %}" method="post"  class="d-flex ps-3">
+                                <form action="{% url 'smile:userIfind' %}" method="post"  class="d-flex ps-3">
                                     {% csrf_token %}
                                     <input class="form-control me-2" name="username" type="search" placeholder="Search" aria-label="Search">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -320,8 +320,8 @@
                                           </td>
                                         {% else %}
                                           <td>
-                                            <a href="{% url 'approve' stud.smileUserName  %}"><img src="{% static 'smile/images (1).jpeg' %}" width="30px" height="30px" ></a>
-                                            <a href="{% url 'disapprove' stud.smileUserName %}"><img src="{% static 'smile/images.jpeg' %}" width="30px" height="30px" ></a>
+                                            <a href="{% url 'smile:approve' stud.smileUserName  %}"><img src="{% static 'smile/images (1).jpeg' %}" width="30px" height="30px" ></a>
+                                            <a href="{% url 'smile:disapprove' stud.smileUserName %}"><img src="{% static 'smile/images.jpeg' %}" width="30px" height="30px" ></a>
                                           </td>
                                         {% endif %}
                                       </tr>

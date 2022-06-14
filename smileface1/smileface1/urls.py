@@ -27,9 +27,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin', admin.site.urls),
-    path('', views.index, name='index'),
-    path('userProfile', views.userProfile, name='userProfile'),
-
+    path('index', views.index, name='index'),
+    path('status', views.status, name='status'),
     path('aboutus', views.aboutus, name='aboutus'),
     path('contactus', views.contactus, name='contactus'),
     path('mission', views.mission, name='mission'),
@@ -42,6 +41,6 @@ urlpatterns = [
     path('handlelogin', views.handlelogin, name='handlelogin'),
     path('handlelogout', views.handlelogout, name='handlelogout'),
     path('handlelogout', views.handlelogout, name='handlelogout'),
-    path('smile/', include(smile.urls))
+    path('smile/',  include(smile.urls, namespace='smile'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

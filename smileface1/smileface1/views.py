@@ -3,6 +3,7 @@
 
 import argparse
 from email.policy import default
+from multiprocessing import context
 import os
 from webbrowser import get
 from django.http import HttpResponse
@@ -21,41 +22,69 @@ import test as mosaci
 
 
 def index(request):
-    if request.method == "GET":
-        if request.user.is_authenticated:
-            user=request.user.username
-            data=profile.objects.get(FName=user)
-            context = {
-                'data':data
+    if request.user.is_superuser:
+        smileImages = smilingimagestable.objects.all()
+         #images = Smile.objects.aggregate(Count('smileImage'))
+        images = smilingimagestable.objects.values_list('smileImage', flat=True).count()
+        context = {
+                "silmedata": smileImages,
+                 "users_count": smileImages.count,
+                 'images' :  images
             }
-        return render(request, 'test.html', context)
-
-    if request.method == "POST":
-        FirstName = request.POST["FirstName"]
-        LastName = request.POST["LastName"]
-        email = request.POST['email']
-        phone = request.POST['phone']
-        ReferalCode = request.POST['ReferalCode']
-        profileimage = request.POST['profileimage']
-        if profile.objects.filter(FName=FirstName).exists():
-            messages.success(request,"you already create the profile!")
-            return render(request, 'test.html')
-        else:
-            profile_obj = profile.objects.create(FName=FirstName,LName=LastName,email=email,Phone=phone,profile_image=profileimage,
-            referal_code = ReferalCode)
-            profile_obj.save()
-            print(FirstName,LastName,email,phone,ReferalCode)
-            code = "none"
-            return render(request, 'test.html', {'code': code})
+        return render(request, 'smile/newadmin.html', context)
+    
+    else:
+        if request.user.is_authenticated:
+            print("enter")
+            if request.method == "GET":
+                user=request.user.username
+                print(user)      
+                data=profile.objects.get(FName=user)
+                context = {
+                    'data':data
+                }
+                return render(request, 'test.html', context)
 
 
+        if request.method == "POST":
+            FirstName = request.POST["FirstName"]
+            LastName = request.POST["LastName"]
+            email = request.POST['email']
+            phone = request.POST['phone']
+            ReferalCode = request.POST['ReferalCode']
+            profileimage = request.POST['profileimage']
+            # if profile.objects.filter(FName=FirstName).exists():
+            #     messages.success(request,"you already create the profile!")
+            #     return render(request, 'test.html')
+            # else:
+            userid= ''
+            data=User.objects.filter(username=FirstName).values()
+            for i in data:
+                id = i['id']
+                userid=id
+            userinstant = User.objects.get(id=userid)
+            profile_obj = profile.objects.update(user_id=userinstant,LName=LastName,Phone=phone,profile_image=profileimage,)
+            profile_data= profile.objects.filter(FName=FirstName).values()
+            print(profile_data)
+            print(type(profile_data))
+            context={
+                    'profile_data':profile_data
+                }
+            return render(request, 'test.html',context)
 
-def userProfile(request):
-    if request.method == 'POST':
-        pass
+def status(request):
+     if request.user.is_authenticated:
+        user=request.user.username
+        print(user)      
+        status=smilingimagestable.objects.get(smileUserName=user)
+        data1=profile.objects.get(FName=user)
 
+        context={
+            "status":status,
+            "data1":data1
+        }
 
-
+        return render(request,'test.html',context)
 
 def aboutus(request):
     return render(request, 'aboutus.html')
@@ -111,7 +140,21 @@ def handlesignup(request):
                         point = referal_obj.points
                         point = point +1
                         print(point)
-                        user = profile.objects.filter(FName=referal_obj).update(points=point)            
+                        user = profile.objects.filter(FName=referal_obj).update(points=point)
+                        myuser = User.objects.create_user(username, email, password)
+                        myuser.save()
+                        user= myuser.username
+                        userid= ''
+                        data=User.objects.filter(username=user).values()
+                        for i in data:
+                            id = i['id']
+                            userid=id
+
+                        userinstant = User.objects.get(id=userid)
+                        code=generate_code()
+                        profile_obj = profile.objects.create(FName=username,user_id= userinstant, email=email, referal_code=code)
+                        profile_obj.save()
+
                     else:
                         myuser = User.objects.create_user(username, email, password)
                         myuser.save()
