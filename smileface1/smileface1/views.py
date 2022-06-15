@@ -164,7 +164,6 @@ def handlesignup(request):
                         for i in data:
                             id = i['id']
                             userid=id
-
                         userinstant = User.objects.get(id=userid)
                         code=generate_code()
                         profile_obj = profile.objects.create(FName=username,user_id= userinstant, email=email, referal_code=code)
@@ -196,24 +195,32 @@ def handlelogin(request):
         print(loginusername,loginpassword)
         user = authenticate(username=loginusername, password=loginpassword)
         print(user)
-        picuploaduser = smilingimagestable.objects.values_list('smileUserName',flat=True)
-        v1 = list(picuploaduser)
-        for i in v1:
-            if loginusername == i:
-                messages.success(request,("you already upload the picture"))
-                return redirect('index')
-            else:
-                pass
+        if user:
+            dj_login(request, user)
+            print("Checking User Name")
+            return redirect('index')
         else:
+            messages.success(request,("invalid credentials Please try again "))
+            return redirect('login')
 
-            if user is not None:
-                dj_login(request, user)
-                print("Checking User Name")
-                return redirect('index')
+        # picuploaduser = smilingimagestable.objects.values_list('smileUserName',flat=True)
+        # v1 = list(picuploaduser)
+        # for i in v1:
+        #     if loginusername == i:
+        #         messages.success(request,("you already upload the picture"))
+        #         return redirect('index')
+        #     else:
+        #         pass
+        # else:
 
-            else:
-                messages.success(request,("invalid credentials Please try again "))
-                return redirect('login')
+        #     if user is not None:
+        #         dj_login(request, user)
+        #         print("Checking User Name")
+        #         return redirect('index')
+
+        #     else:
+        #         messages.success(request,("invalid credentials Please try again "))
+        #         return redirect('login')
     return render(request, 'index.html')
 
 

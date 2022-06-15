@@ -193,6 +193,19 @@ def disapprove(request, username):
     return render(request, 'charge.html')
 
 
+def mozactemple(request):
+    userInfor = Smile.objects.all()
+    #images = Smile.objects.aggregate(Count('smileImage'))
+    images = Smile.objects.values_list('smileImage', flat=True).count()
+    context = {
+         "mozactemplate":"true",
+         "userInfor": userInfor,
+         "users_count": userInfor.count,
+         'images' :  images
+            }
+    return render(request, "smile/newadmin.html",context )
+
+
 
 
 def generatemosac(request):
@@ -214,6 +227,7 @@ def newadmindashbord(request):
          #images = Smile.objects.aggregate(Count('smileImage'))
          images = Smile.objects.values_list('smileImage', flat=True).count()
          context = {
+                "newadmin":"true",
                 "silmedata": smileImages,
                  "users_count": smileImages.count,
                  'images' :  images

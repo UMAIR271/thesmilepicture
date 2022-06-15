@@ -34,6 +34,7 @@ urlpatterns = [
     path('submitSmile', views.submitSmile, name='submitSmile'),
     path('approve/<str:username>/', views.approve, name='approve'),
     path('disapprove/<str:username>/', views.disapprove, name='disapprove'),
+    path('mozactemple', views.mozactemple, name='mozactemple'),
     path('generatemosac', views.generatemosac, name='generatemosac'),
     path('generatemosac2', views.generatemosac2, name='generatemosac2'),
     path('userInfor', views.userInfor, name='userInfor'),
