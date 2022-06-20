@@ -18,11 +18,11 @@
         <div class="navigation">
             <ul class="ps-2">
                 <li>
-                    <a href="#">
+                    <a href="{% url 'smile:newadmindashbord' %}">
                         <span class="icon">
-                            <ion-icon name="logo-apple"></ion-icon>
+                            <ion-icon name="happy-outline"></ion-icon>
                         </span>
-                        <span class="title">Brand Name</span>
+                        <span class="title">SMILE</span>
                     </a>
                 </li>
 
@@ -36,20 +36,20 @@
                 </li>
 
                 <li>
-                    <a href="{% url 'smile:userInfor' %}">
+                    <a href="{% url 'smile:CustomersImages' %}">
                             <span class="icon">
-                                <ion-icon name="people-outline"></ion-icon>
+                                <ion-icon name="image-outline"></ion-icon>
                             </span>
-                        <span class="title">Customers</span>
+                        <span class="title">Customers Images</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="{% url 'smile:userInfor' %}">
                         <span class="icon">
-                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-icon name="information-circle-outline"></ion-icon>
                         </span>
-                        <span class="title">Messages</span>
+                        <span class="title">User Info</span>
                     </a>
                 </li>
                 
@@ -63,7 +63,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/handlelogout">
+                    <a href="{% url 'handlelogout' %}">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
@@ -72,6 +72,20 @@
                 </li>
             </ul>
         </div>
+        <!-- =============== message ================ -->
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show ms-5" onclick="this.parentElement.style.display='none';" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endfor %}
+            {% endif %}
+          </div>
+          <!---->
         <div class="main">
             <div class="topbar">
                 <div class="toggle">
@@ -157,7 +171,7 @@
                                 <td>{{stud.smileUserName}}</td>
                                 <td>{{stud.smileReason}}</td>
                                 <td>
-                                    <img src="/{{stud.smileImage}}" width="50px" height="50px">
+                                    <img src="{{ stud.smileImage.url }}" width="50px" height="50px">
                                 </td>
                                 
                                 {% if stud.smile_Aprroval %}
@@ -361,7 +375,7 @@
             </div>
         </div>
         {%endif%}
-        {% if userInfor %}
+        {% if CustomersInfo %}
         <div class="main">
             <div class="topbar">
                 <div class="toggle">
@@ -450,8 +464,8 @@
                                 </thead>
         
                                 <tbody>
-                                    {% if data %}
-                                    {% for stud in data %}
+                                    {% if userIfind_data %}
+                                    {% for stud in userIfind_data %}
                                     <tr>
                                         <td>{{stud.smileUserName}}</td>
                                         <td>{{stud.smileReason}}</td>
@@ -469,6 +483,116 @@
                                             <a href="{% url 'smile:disapprove' stud.smileUserName %}"><img src="{% static 'smile/images.jpeg' %}" width="30px" height="30px" ></a>
                                           </td>
                                         {% endif %}
+                                      </tr>
+                                      {% endfor %}
+                                      {% endif %}
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                </div>
+            </div>
+                      
+        </div>
+        {%endif%}
+        <!-- ================= listofuser ================ -->
+        {% if userInfor %}
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="assets/imgs/customer01.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card">
+                    <span>
+                        <span class="numbers">{{users_count}}</span>
+                        <span class="iconBx" style="margin-left: 150px;">
+                            <i class="fa-solid fa-users"></i>
+                        </span><br>
+                        <span class="cardName">Total User</span>
+                    <span>
+                </div>
+
+                <div class="card">
+                    <span>
+                        <span class="numbers">{{images}}</span>
+                        <span class="iconBx" style="margin-left: 150px;">
+                            <i class="fa-solid fa-images"></i>
+                        </span><br>
+                        <span class="cardName">Total Images</span>
+                    <span>  
+                </div>
+
+                <div class="card">
+                    <span>
+                        <span class="numbers">{{images}}</span>
+                        <span class="iconBx" style="margin-left: 150px;">
+                            <i class="fa-solid fa-images"></i>
+                        </span><br>
+                        <span class="cardName">Total Images</span>
+                    <span>  
+                </div>
+
+                <div class="card">
+                    <span>
+                        <span class="numbers">{{images}}</span>
+                        <span class="iconBx" style="margin-left: 150px;">
+                            <i class="fa-solid fa-images"></i>
+                        </span><br>
+                        <span class="cardName">Total Images</span>
+                    <span>  
+                </div>
+            </div>
+
+            <!-- ================ Order Details List ================= -->
+            <div class="container-fuild Details">
+                <div class="row">
+                        <div class=" px-4 py-5 col-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <td>Last Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>referal_code</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+        
+                                <tbody>
+                                    {% if listOfUser %}
+                                    {% for stud in listOfUser %}
+                                    <tr>
+                                        <td>{{stud.FName}}</td>
+                                        <td>{{stud.LName}}</td>
+                                        <td>
+                                            {{stud.Phone}}
+                                        </td>
+                                        <td>
+                                            {{stud.email}}
+                                        </td>
+                                        <td>
+                                            {{stud.referal_code}}
+                                        </td>
+                                        <td>
+                                            {{stud.points}}
+                                        </td>
                                       </tr>
                                       {% endfor %}
                                       {% endif %}

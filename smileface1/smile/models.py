@@ -22,7 +22,7 @@ class Smile (models.Model):
     smileReason = models.CharField(max_length=200)
     smile_Aprroval = models.BooleanField(default=False)
     smileUserName = models.CharField(max_length=100, default="")
-    smileImage = models.ImageField(upload_to='smile/images', default="")
+    smileImage = models.ImageField(upload_to='smile/images/', default="")
     referal_code = models.CharField(max_length=12, blank=True)
     
     def __str__(self):
@@ -43,7 +43,7 @@ class profile(models.Model):
     LName = models.CharField(max_length=15, blank=True)
     Phone = PhoneNumberField(blank = True)
     email = models.EmailField(max_length=70,blank=True,unique=True)
-    profile_image = models.ImageField(upload_to='smile/images', default="")
+    profile_image = models.ImageField(upload_to='smile/images/', default="")
     referal_code = models.CharField(max_length=12, blank=True)
     points = models.PositiveIntegerField(blank=True, default=0)
 

@@ -14,9 +14,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login as dj_login, logout
 from django.contrib.auth.models import User
+from smile.forms import profilrSubmitForm, smileSubmitForm
 from smile.models import Smile as smilingimagestable
 from subprocess import call
 from smile.code import generate_code
+import pdb
 from smile.models import profile
 import test as mosaci
 
@@ -44,47 +46,65 @@ def index(request):
                     'data':data
                 }
                 return render(request, 'test.html', context)
-
-
-        if request.method == "POST":
-            FirstName = request.POST["FirstName"]
-            LastName = request.POST["LastName"]
-            email = request.POST['email']
-            phone = request.POST['phone']
-            ReferalCode = request.POST['ReferalCode']
-            profileimage = request.POST['profileimage']
-            # if profile.objects.filter(FName=FirstName).exists():
-            #     messages.success(request,"you already create the profile!")
-            #     return render(request, 'test.html')
-            # else:
-            userid= ''
-            data=User.objects.filter(username=FirstName).values()
-            for i in data:
-                id = i['id']
-                userid=id
-            userinstant = User.objects.get(id=userid)
-            profile_obj = profile.objects.update(user_id=userinstant,LName=LastName,Phone=phone,profile_image=profileimage,)
-            profile_data= profile.objects.filter(FName=FirstName).values()
-            print(profile_data)
-            print(type(profile_data))
-            context={
-                    'profile_data':profile_data
-                }
-            return render(request, 'test.html',context)
+            else:
+                if request.method == "POST":
+                    print("post")
+                    FirstName = request.POST["FirstName"]
+                    LastName = request.POST["LastName"]
+                    email = request.POST['email']
+                    phone = request.POST['phone']
+                    ReferalCode = request.POST['ReferalCode']
+                    profileimage = request.POST['profileimage']
+                    if profile.objects.filter(LName=LastName).exists():
+                        messages.success(request,"you already create the profile!")
+                        return render(request, 'test.html')
+                    else:
+                        userid= ''
+                        data=User.objects.filter(username=FirstName).values()
+                        for i in data:
+                            id = i['id']
+                            userid=id
+                        userinstant = User.objects.get(id=userid)
+                        profile_obj = profile.objects.update(user_id=userinstant,LName=LastName,Phone=phone,profile_image=profileimage,)
+                        print(profile_obj)
+                        data=profile.objects.get(FName=FirstName)
+                    # form = profilrSubmitForm(request.POST,request.FILES,instance = userinstant)
+                    # if form.is_valid():
+                    #     profile_data= profile.objects.filter(FName=FirstName).values()
+                    #     profile_data.delete()  # This will delete your old image
+                    #     form.save()
+                    
+                    context={
+                            'data':data
+                        }
+                    return render(request, 'test.html',context)
 
 def status(request):
      if request.user.is_authenticated:
         user=request.user.username
-        print(user)      
-        status=smilingimagestable.objects.get(smileUserName=user)
-        data1=profile.objects.get(FName=user)
+        print(user)     
+        count=smilingimagestable.objects.filter(smileUserName=user).count()
+        check=smilingimagestable.objects.filter(smileUserName=user).exists()
+        if check:
+            status=smilingimagestable.objects.filter(smileUserName=user)
+            data1=profile.objects.get(FName=user)
+            if count>1:
+                messages.success(request,"you already upload the profile!")
+                context={
+                "count":count,
+                "data1":data1
+                }
+                return render(request, 'test.html',context)
+            else:
+                context={
+                "status":status,
+                "data1":data1
+                }
+            return render(request,'test.html',context)
+        else:
+             messages.success(request,"please upload image first!")
+             return render(request,'test.html')
 
-        context={
-            "status":status,
-            "data1":data1
-        }
-
-        return render(request,'test.html',context)
 
 def aboutus(request):
     return render(request, 'aboutus.html')
@@ -202,25 +222,6 @@ def handlelogin(request):
         else:
             messages.success(request,("invalid credentials Please try again "))
             return redirect('login')
-
-        # picuploaduser = smilingimagestable.objects.values_list('smileUserName',flat=True)
-        # v1 = list(picuploaduser)
-        # for i in v1:
-        #     if loginusername == i:
-        #         messages.success(request,("you already upload the picture"))
-        #         return redirect('index')
-        #     else:
-        #         pass
-        # else:
-
-        #     if user is not None:
-        #         dj_login(request, user)
-        #         print("Checking User Name")
-        #         return redirect('index')
-
-        #     else:
-        #         messages.success(request,("invalid credentials Please try again "))
-        #         return redirect('login')
     return render(request, 'index.html')
 
 

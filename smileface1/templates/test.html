@@ -20,7 +20,7 @@
                 <li>
                     <a href="#">
                         <span class="icon">
-                            <ion-icon name="logo-apple"></ion-icon>
+                          <ion-icon name="happy-outline"></ion-icon>
                         </span>
                         <span class="title">Brand Name</span>
                     </a>
@@ -71,7 +71,7 @@
                   </a>
               </li>
                 <li>
-                    <a href="/handlelogout">
+                    <a href="{% url 'handlelogout' %}">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
@@ -94,9 +94,9 @@
                         <ion-icon name="search-outline"></ion-icon>
                     </label>
                 </div>
-                {%if profile_data%}
+                {%if data.profile_image%}
                 <div class="user">
-                    <img src="/{{profile_data.profile_image}}" alt="">
+                    <img src="{{data.profile_image.url}}" alt="">
                 </div>
                 {%else%}
                 <div class="user">
@@ -135,7 +135,11 @@
                       <div class="account-settings">
                         <div class="user-profile">
                           <div class="user-avatar">
+                            {% if data.profile_image %}  
+                            <img src="{{data.profile_image.url}}" alt="Maxwell Admin">
+                            {%else%}
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+                            {%endif%}
                           </div>
                           <h5 class="user-name">{{data.FName}}</h5>
                           <h6 class="user-email">{{data.email}}</h6>
@@ -156,7 +160,7 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-5">
                           <h3 class="mb-2 text-primary text-center">Personal Details</h3>
                         </div>
-                        <form action="" method="post">
+                        <form action="index" method="post">
                           {% csrf_token %}
                           <div class="row pb-5">
                             <div class="col-md-6">
@@ -167,13 +171,21 @@
                               </div>
                             </div>
                             <!--  col-md-6   -->
-                      
+                            {% if data.LName %}
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label for="last"><h4>Last Name</h4></label>
-                                <input type="text" class="form-control" placeholder="" id="last" name="LastName">
+                                <input type="text" class="form-control" value="{{data.LName}}" placeholder="" id="last" name="LastName">
                               </div>
                             </div>
+                            {% else %}
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="last"><h4>Last Name</h4></label>
+                                <input type="text" class="form-control" value="" placeholder="" id="last" name="LastName">
+                              </div>
+                            </div>
+                            {%endif%}
                             <!--  col-md-6   -->
                           </div>
                       
@@ -186,16 +198,25 @@
                                 <input type="email" class="form-control" name="email" id="email" value="{{data.email}}" placeholder="email">
                               </div>
                             </div>
-                            
+
+                            {% if data.Phone %}
                             <!--  col-md-6   -->
-                      
                             <div class="col-md-6">
                       
                               <div class="form-group">
                                 <label for="phone"><h4>Phone Number</h4></label>
-                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone">
+                                <input type="tel" class="form-control" name="phone" value="{{data.Phone}}" id="phone" placeholder="phone">
                               </div>
                             </div>
+                            {% else %}
+                            <div class="col-md-6">
+                      
+                              <div class="form-group">
+                                <label for="phone"><h4>Phone Number</h4></label>
+                                <input type="tel" class="form-control" name="phone" value="" id="phone" placeholder="phone">
+                              </div>
+                            </div>
+                            {%endif%}
                             <!--  col-md-6   -->
                           </div>
                           <!--  row   -->
@@ -205,15 +226,25 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label for="company"><h4>Referal Code</h4></label>
-                                <input type="text" class="form-control" name="ReferalCode" placeholder="Referal Code" id="code" value="{{data.referal_code}}" readonly name="Referal Code                 ">
+                                <input type="text" class="form-control" name="ReferalCode" placeholder="R eferal Code" id="code" value="{{data.referal_code}}" readonly name="Referal Code                 ">
                               </div>
                             </div>
                             
                             <!--  col-md-6   -->
+                            {% if data.profile_image %}
                       
                             <div class="col-md-6">
                               <div class="form-group">
-                                
+                                <div>
+                                  <label for="url"><h4>Upload Profile image </h4></label>
+                                  <input class="form-control form-control-lg" value="{{data.profile_image}}" name="profileimage" id="formFileLg" type="file">
+                                </div>
+                              </div>
+                      
+                            </div>
+                            {% else %}
+                            <div class="col-md-6">
+                              <div class="form-group">
                                 <div>
                                   <label for="url"><h4>Upload Profile image </h4></label>
                                   <input class="form-control form-control-lg" name="profileimage" id="formFileLg" type="file">
@@ -221,6 +252,8 @@
                               </div>
                       
                             </div>
+
+                            {%endif%}
                             <!--  col-md-6   -->
                           </div>
                           <!--  row   -->
@@ -382,9 +415,17 @@
                       <div class="card-body">
                         <div class="account-settings">
                           <div class="user-profile">
+                            {% if data1.profile_image %}
+                            <div class="user-avatar">
+                              <img src="{{ data1.profile_image.url }}" alt="Maxwell Admin">
+                            </div>
+                            {% else %}
                             <div class="user-avatar">
                               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
                             </div>
+                            {%endif%}
+
+
                             <h5 class="user-name">{{data1.FName}}</h5>
                             <h6 class="user-email">{{data1.email}}</h6>
                           </div>
@@ -400,6 +441,45 @@
                       </div>
                     </div>
                     </div>
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <div class="row gutters">
+                            <table class="table">
+                              <thead>
+                                  <tr>
+                                      <td>Name</td>
+                                      <td>Price</td>
+                                      <td>Image</td>
+                                      <td>Status</td>
+                                  </tr>
+                              </thead>
+      
+                              <tbody>
+                                  <tr>
+                                      <td>{{status.smileUserName}}</td>
+                                      <td>{{status.smileReason}}</td>
+                                      <td>
+                                          <img src="{{ status.smileImage.url }}" width="50px" height="50px">
+                                      </td>
+                                      
+                                      {% if status.smile_Aprroval %}
+                                        <td>
+                                          <h3>Approved</h3>
+                                        </td>
+                                      {% else %}
+                                      <td>
+                                        <h3>Pending</h3>
+                                      </td>
+                                      {% endif %}
+                                    </tr>
+                              </tbody>
+                          </table>
+                          </div>
+                            
+                        </div>
+                      </div>
+                      </div>
                   
                   {%endif%}
 

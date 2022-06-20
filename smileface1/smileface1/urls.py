@@ -32,15 +32,14 @@ urlpatterns = [
     path('aboutus', views.aboutus, name='aboutus'),
     path('contactus', views.contactus, name='contactus'),
     path('mission', views.mission, name='mission'),
-    path('', views.login, name='login'),
+    path('login', views.login, name='login'),
     path('signup', views.signup, name='signup'),
     path('reasontosmile', views.reasontosmile, name='reasontosmile'),
     path('testfunction', views.testfunction, name='testfunction'),
     path('click', views.click, name='click'),
     path('handlesignup', views.handlesignup, name='handlesignup'),
     path('handlelogin', views.handlelogin, name='handlelogin'),
-    path('handlelogout', views.handlelogout, name='handlelogout'),
-    path('handlelogout', views.handlelogout, name='handlelogout'),
+    path('', views.handlelogout, name='handlelogout'),
     path('smile/',  include(smile.urls, namespace='smile'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -80,7 +80,7 @@
 
                 </ul><span class="navbar-text actions"> <a class="login">Wellcome
                         {{request.user}}</a><strong>/</strong><a class="login signup"
-                        href="/handlelogout">Logout</a></span>
+                        href="{% url 'handlelogout' %}">Logout</a></span>
                 {%else%}
                 </ul><span class="navbar-text actions"> <a class="login" href="{% url 'login' %}">LOGIN</a><strong>/</strong><a
                         class="login signup" href="/signup">SIGNUP</a></span>

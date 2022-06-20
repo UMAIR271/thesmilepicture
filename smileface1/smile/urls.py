@@ -37,6 +37,7 @@ urlpatterns = [
     path('mozactemple', views.mozactemple, name='mozactemple'),
     path('generatemosac', views.generatemosac, name='generatemosac'),
     path('generatemosac2', views.generatemosac2, name='generatemosac2'),
+    path('CustomersImages', views.CustomersImages, name='CustomersImages'),
     path('userInfor', views.userInfor, name='userInfor'),
     path('userIfind', views.userIfind, name='userIfind'),
 

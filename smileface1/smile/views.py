@@ -1,15 +1,19 @@
 from email import message
+from multiprocessing import context
+from tkinter import N
 from django.core.mail import send_mail
 from smileface1.settings import EMAIL_HOST_USER
+import shutil
 import os
+import pdb
 from django.conf import settings
-from pyexpat.errors import messages
+from django.contrib import messages
 from urllib import response
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Smile
+from .models import Smile,profile
 import matplotlib.pyplot as plt
 
 from smileface1 import settings
@@ -37,13 +41,21 @@ def dashboard(request):
          return render(request, 'smile/newadmin.html', context)
 
 def UploadMozacimage(request):
-        form = smileSubmitForm()
-        form = smileSubmitForm(
-            initial={'smileUserName': request.user.username})
-
-        context = {'form': form}
-        return render(request, 'test.html', context)
-
+    if request.user.is_authenticated:
+        user=request.user.username      
+        status=Smile.objects.filter(smileUserName=user).count()
+        # data=profile.objects.get(FName=user)
+        if status>1:
+            messages.success(request,"you already upload the profile!")
+            return render(request, 'test.html')
+        else:
+            form = smileSubmitForm()
+            form = smileSubmitForm(
+                initial={'smileUserName': request.user.username})
+            context = {'form': form}
+            return render(request, 'test.html', context)
+    messages.success(request,"you are not user")
+    return render(request, 'test.html')
 
 def submitSmile(request):
     if request.method == 'POST':
@@ -164,8 +176,17 @@ def approve(request, username):
     if var1:
         approval_user=Smile.objects.get(smileUserName=username)
         approval_image = approval_user.smileImage
-        plt.savefig(os.path.join(settings.BASE_DIR,f"{approval_image}"))
-        print("umair")
+        source = os.path.join(settings.BASE_DIR) + "/media/"+f"{approval_image}"
+        destination = os.path.join(settings.BASE_DIR)+f"/{approval_image}"
+        shutil.copy(source, destination)
+        print(source,destination)
+        messages.success(request,"The image is successfully approved")
+        image_approve = "image_approve"    
+        context = {
+           "image_approve":image_approve
+        }
+        return render(request, "smile/newadmin.html",context)
+
     else:
         pass
         
@@ -243,14 +264,14 @@ def newadmindashbord(request):
         return render(request, 'smile/dashboard.html', context)
 
 
-def userInfor(request):
+def CustomersImages(request):
     if request.user.is_superuser:
-         userInfor = Smile.objects.all()
+         CustomersInfo = Smile.objects.all()
          #images = Smile.objects.aggregate(Count('smileImage'))
          images = Smile.objects.values_list('smileImage', flat=True).count()
          context = {
-                "userInfor": userInfor,
-                 "users_count": userInfor.count,
+                "CustomersInfo": CustomersInfo,
+                 "Customer_count": CustomersInfo.count,
                  'images' :  images
             }
          return render(request, 'smile/newadmin.html', context)
@@ -262,20 +283,32 @@ def userInfor(request):
 
         context = {'form': form}
         return render(request, 'smile/dashboard.html', context)
-
+def userInfor(request):
+    listOfUser=profile.objects.all()
+    userInfor = Smile.objects.all()
+    images = Smile.objects.values_list('smileImage', flat=True).count()
+    context = {
+                "userInfor": userInfor,
+                 "users_count": userInfor.count,
+                 'images' :  images,
+                 "listOfUser":listOfUser
+                 
+            }
+    return render(request, 'smile/newadmin.html', context)
+    
 
 def userIfind(request):
     if request.method == 'POST':
         username = request.POST["username"]
-        userInfor = Smile.objects.all()
+        CustomersInfo = Smile.objects.all()
          #images = Smile.objects.aggregate(Count('smileImage'))
         images = Smile.objects.values_list('smileImage', flat=True).count()
-        data = Smile.objects.filter(smileUserName=username).values()
-        print(data)
+        userIfind_data = Smile.objects.filter(smileUserName=username).values()
+        print(userIfind_data)
         context = {
-                "data": data,
-                 "userInfor": userInfor,
-                 "users_count": userInfor.count,
+                "userIfind_data": userIfind_data,
+                 "CustomersInfo": CustomersInfo,
+                 "users_count": CustomersInfo.count,
                  'images' :  images
             }
         return render(request, 'smile/newadmin.html', context)
