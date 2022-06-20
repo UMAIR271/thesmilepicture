@@ -86,7 +86,7 @@ def status(request):
         count=smilingimagestable.objects.filter(smileUserName=user).count()
         check=smilingimagestable.objects.filter(smileUserName=user).exists()
         if check:
-            status=smilingimagestable.objects.filter(smileUserName=user)
+            status=smilingimagestable.objects.get(smileUserName=user)
             data1=profile.objects.get(FName=user)
             if count>1:
                 messages.success(request,"you already upload the profile!")

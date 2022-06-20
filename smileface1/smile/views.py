@@ -179,7 +179,6 @@ def approve(request, username):
         source = os.path.join(settings.BASE_DIR) + "/media/"+f"{approval_image}"
         destination = os.path.join(settings.BASE_DIR)+f"/{approval_image}"
         shutil.copy(source, destination)
-        print(source,destination)
         messages.success(request,"The image is successfully approved")
         image_approve = "image_approve"    
         context = {
@@ -200,7 +199,6 @@ def disapprove(request, username):
     to_send = User.objects.all()
     usera = User.objects.get(username=username)
     useremail = usera.email
-    print(useremail)
     message = "your image not Approved plaese wait"
     from_email = EMAIL_HOST_USER
     to_recipent = [useremail, 'usmankhankh321@gmail.com']
@@ -230,14 +228,11 @@ def mozactemple(request):
 
 
 def generatemosac(request):
-
-    print("generating mosac")
     os.system("python smileface1/test.py --target-image smileface1/test/test-data/a.jpg --input-folder  media/smile/images/ --grid-size 100 100 ")
     return HttpResponse("Generating Mosac")
 
 
 def generatemosac2(request):
-    print("generating mosac")
     os.system("python smileface1/test2.py --target-image smileface1/test/test-data/a.jpg --input-folder  media/smile/images/ --grid-size 100 100 ")
     return HttpResponse("Generating Mosac")
 
@@ -304,7 +299,6 @@ def userIfind(request):
          #images = Smile.objects.aggregate(Count('smileImage'))
         images = Smile.objects.values_list('smileImage', flat=True).count()
         userIfind_data = Smile.objects.filter(smileUserName=username).values()
-        print(userIfind_data)
         context = {
                 "userIfind_data": userIfind_data,
                  "CustomersInfo": CustomersInfo,
